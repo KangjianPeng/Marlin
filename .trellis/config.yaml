@@ -1,6 +1,0 @@
-# Trellis Configuration — Marlin-rev05
-# Opulo LumenPnP REV5 Marlin firmware (embedded C++ / PlatformIO)
-
-session_commit_message: "chore: record journal"
-max_journal_lines: 2000
-session_auto_commit: false
