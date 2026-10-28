@@ -5,7 +5,7 @@ This repository builds the Qingwa PnP firmware for the Opulo Lumen REV5 board
 
 ## Continuous builds
 
-- Pull requests targeting `dev`, pushes to `dev`, and manual workflow runs build
+- Pull requests targeting `dev` and pushes to `dev` build
   the firmware and attach the `.bin`, build metadata, SHA-256 checksum, and ZIP
   package to the GitHub Actions run for 30 days.
 - The workflow is `.github/workflows/build-qingwa-firmware.yml`.
