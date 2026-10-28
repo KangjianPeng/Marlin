@@ -41,7 +41,31 @@ jobs:
         run: python -m pip install --upgrade platformio
 
       - name: Build firmware
-        run: pio run -e Opulo_Lumen_REV5
+        shell: bash
+        run: |
+          set -o pipefail
+          pio run -e Opulo_Lumen_REV5 -v 2>&1 | tee build.log
+
+      - name: Publish build diagnostics
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo '### PlatformIO build diagnostics'
+            echo
+            echo '```text'
+            tail -n 250 build.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qingwa-pnp-marlin-build-log-${{ github.run_id }}
+          path: build.log
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Package firmware and checksum
         id: package
