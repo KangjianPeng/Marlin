@@ -125,7 +125,7 @@ void Marlin_NeoPixel::init() {
   Marlin_NeoPixel2 neo2;
 
   pixel_index_t Marlin_NeoPixel2::neoindex;
-  Adafruit_NeoPixel Marlin_NeoPixel2::adaneo(NEOPIXEL2_PIXELS, NEOPIXEL2_PIN, NEOPIXEL2_TYPE);
+  Adafruit_NeoPixel Marlin_NeoPixel2::adaneo(NEOPIXEL2_PIXELS, NEOPIXEL2_PIN, NEOPIXEL2_TYPE + NEO_KHZ800);
 
   void Marlin_NeoPixel2::set_color(const uint32_t color) {
     if (neoindex >= 0) {
