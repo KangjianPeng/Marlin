@@ -483,6 +483,7 @@
 #define BOARD_CREALITY_F401RE               5247  // Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1
 #define BOARD_BLACKPILL_CUSTOM              5248  // Custom board based on STM32F401CDU6.
 #define BOARD_I3DBEEZ9_V1                   5249  // I3DBEEZ9 V1 (STM32F407ZG)
+#define BOARD_OPULO_LUMEN_REV5              5265  // Opulo Lumen PnP Controller REV5 (STM32F407VE / STM32F407VG)
 #define BOARD_MELLOW_FLY_E3_V2              5250  // Mellow Fly E3 V2 (STM32F407VG)
 #define BOARD_MELLOW_FLY_E3_PRO_V3          5251  // Mellow Fly E3 Pro V3 (STM32F407VG)
 #define BOARD_BLACKBEEZMINI_V1              5252  // BlackBeezMini V1 (STM32F401CCU6)
