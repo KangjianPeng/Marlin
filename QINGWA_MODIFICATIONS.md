@@ -22,7 +22,13 @@
 ### `Marlin/Configuration_adv.h`
 
 - 启用控制板风扇，使用 `PE2`，电机停止后的保持时间设为 120 秒。
-- 关闭固件开机提示音序列；保留 `SPEAKER`，供上位机按需发送 `M300`。
+- 保留 `SPEAKER`，供上位机发送 `M300`；当前 `STARTUP_COMMANDS` 已启用三音开机旋律（523/659/784 Hz）。
+
+### 固件构建与发布
+
+- GitHub Actions 使用 PlatformIO 的 `Opulo_Lumen_REV5` 环境编译固件。
+- PR 和 `dev` 分支推送会生成 Actions 构建产物；推送 `v*` 版本标签会自动构建并发布 GitHub Release。
+- 操作说明见 [`FIRMWARE_RELEASE.md`](FIRMWARE_RELEASE.md)。
 
 ### `platformio.ini`
 
