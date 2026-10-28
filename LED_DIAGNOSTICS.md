@@ -15,15 +15,17 @@ shows that every pixel consistently swaps the same color channels.
 Run each command separately and allow the strip to settle between commands:
 
 ```gcode
-M150 S0 R255
-M150 S0 U255
-M150 S0 B255
-M150 S1 R255
-M150 S1 U255
-M150 S1 B255
+M150 S0 P32 R255
+M150 S0 P32 U255
+M150 S0 P32 B255
+M150 S1 P32 R255
+M150 S1 P32 U255
+M150 S1 P32 B255
 ```
 
 Marlin uses `U` for green in `M150`; `G` is reserved by motion commands.
+Start at `P32` so a full-white test does not hide a power problem. After the
+strip passes the individual-color test, increase `P` gradually.
 
 Interpret the result as follows:
 
@@ -37,6 +39,15 @@ Interpret the result as follows:
   is connected to the configured `PC7` or `PC8` output.
 - Both strips fail in the same way: check the shared 5 V supply and ground,
   then verify that the firmware binary was built from this configuration.
+
+WS2812B strips are normally powered from 5 V, while PC7 and PC8 are 3.3 V
+MCU outputs. Some WS2812B batches accept a 3.3 V data high level, but it is
+outside the guaranteed margin at a 5 V supply. If colors are unstable or
+pixels stop partway through a strip, use a 5 V-tolerant level shifter such as
+`74AHCT125`/`74HCT14` on each data line, with a common ground. A 330-470 ohm
+series resistor close to each data output can reduce ringing on long wires.
+Eight pixels can draw roughly 480 mA at full white per strip, so verify the 5 V
+voltage at the far end and size the supply for both strips together.
 
 The two strips are initialized and updated independently. A firmware setting
 cannot repair a reversed connector, missing ground, insufficient 5 V current,
