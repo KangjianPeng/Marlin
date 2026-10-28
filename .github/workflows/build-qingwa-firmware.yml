@@ -44,7 +44,18 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          pio run -e Opulo_Lumen_REV5 -v 2>&1 | tee build.log
+          : > build.log
+          for attempt in 1 2 3; do
+            printf '\n=== PlatformIO build attempt %s/3 ===\n' "$attempt" | tee -a build.log
+            if pio run -e Opulo_Lumen_REV5 -v 2>&1 | tee -a build.log; then
+              exit 0
+            fi
+            if [[ "$attempt" != 3 ]]; then
+              printf 'Build attempt %s failed; retrying after the package cache settles.\n' "$attempt" | tee -a build.log
+              sleep 10
+            fi
+          done
+          exit 1
 
       - name: Publish build diagnostics
         if: failure()
