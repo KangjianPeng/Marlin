@@ -44,6 +44,6 @@
 - 删除 VS Code 自动生成的本机路径配置和 Python `__pycache__`。
 - 删除未被构建流程使用的 CMake 临时目录。
 - 删除不参与固件构建的 `.trellis` 开发辅助脚手架。
-- 删除重复的配置压缩包；对应配置目录仍保留在 `Marlin/` 下。
+- 删除旧 REV3 / REV4 / REV5 配置快照目录及重复配置压缩包；当前活动配置保留在 `Marlin/Configuration.h` 和 `Marlin/Configuration_adv.h`。
 
 硬件烧录和贴片机现场运行尚未在本机验证。由于当前环境未安装 PlatformIO，本地仅完成源码、Git 状态和垃圾文件检查，未执行固件编译。
