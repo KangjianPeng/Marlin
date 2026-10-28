@@ -1,0 +1,97 @@
+name: Build Qingwa REV5 Firmware
+
+on:
+  push:
+    branches:
+      - dev
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - dev
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Opulo Lumen REV5
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    outputs:
+      artifact_name: ${{ steps.package.outputs.artifact_name }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache PlatformIO packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: ${{ runner.os }}-platformio-${{ hashFiles('platformio.ini', 'ini/*.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-platformio-
+
+      - name: Install PlatformIO
+        run: python -m pip install --upgrade platformio
+
+      - name: Build firmware
+        run: pio run -e Opulo_Lumen_REV5
+
+      - name: Package firmware and checksum
+        id: package
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            version="$GITHUB_REF_NAME"
+          else
+            version="${GITHUB_SHA::12}"
+          fi
+          safe_version="${version//\//-}"
+          name="qingwa-pnp-marlin-${safe_version}"
+          mkdir -p dist
+          cp .pio/build/Opulo_Lumen_REV5/firmware.bin "dist/${name}.bin"
+          {
+            printf 'Version: %s\n' "$version"
+            printf 'Commit: %s\n' "$GITHUB_SHA"
+            printf 'PlatformIO environment: Opulo_Lumen_REV5\n'
+          } > dist/BUILD-INFO.txt
+          (cd dist && sha256sum "${name}.bin" > SHA256SUMS)
+          (cd dist && zip "${name}.zip" "${name}.bin" BUILD-INFO.txt SHA256SUMS)
+          echo "artifact_name=${name}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.artifact_name }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: Publish GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download firmware artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+          path: dist
+
+      - name: Publish release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Qingwa PnP Marlin ${{ github.ref_name }}
+          generate_release_notes: true
+          files: dist/*
+          fail_on_unmatched_files: true
