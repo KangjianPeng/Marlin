@@ -40,6 +40,23 @@ jobs:
       - name: Install PlatformIO
         run: python -m pip install --upgrade platformio
 
+      - name: Install ARM toolchain
+        shell: bash
+        run: |
+          set -o pipefail
+          : > toolchain-install.log
+          for attempt in 1 2 3; do
+            printf '\n=== ARM toolchain install attempt %s/3 ===\n' "$attempt" | tee -a toolchain-install.log
+            if timeout 15m pio pkg install --global --tool platformio/toolchain-gccarmnoneeabi@1.120301.0 2>&1 | tee -a toolchain-install.log; then
+              exit 0
+            fi
+            if [[ "$attempt" != 3 ]]; then
+              printf 'Toolchain install attempt %s failed; retrying after the package mirror settles.\n' "$attempt" | tee -a toolchain-install.log
+              sleep 10
+            fi
+          done
+          exit 1
+
       - name: Build firmware
         shell: bash
         run: |
@@ -62,10 +79,16 @@ jobs:
         shell: bash
         run: |
           {
+            echo '### ARM toolchain installation diagnostics'
+            echo
+            echo '```text'
+            tail -n 250 toolchain-install.log 2>/dev/null || true
+            echo '```'
+            echo
             echo '### PlatformIO build diagnostics'
             echo
             echo '```text'
-            tail -n 250 build.log
+            tail -n 250 build.log 2>/dev/null || true
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -74,7 +97,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: qingwa-pnp-marlin-build-log-${{ github.run_id }}
-          path: build.log
+          path: |
+            build.log
+            toolchain-install.log
           if-no-files-found: ignore
           retention-days: 30
 
