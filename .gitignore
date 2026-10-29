@@ -107,6 +107,9 @@ applet/
 *.su
 
 # PlatformIO files/dirs
+.venv/
+.uv-cache/
+.platformio/
 .pio*
 .pioenvs
 .piolibdeps

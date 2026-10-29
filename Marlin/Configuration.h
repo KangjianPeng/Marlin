@@ -2932,7 +2932,7 @@
 // A sequence of tones to play at startup, in pairs of tone (Hz), duration (ms).
 // Silence in-between tones.
 //
-#define STARTUP_TUNE { 523, 150, 659, 150, 784, 300 }
+//#define STARTUP_TUNE { 523, 150, 659, 150, 784, 300 }
 
 //=============================================================================
 //======================== LCD / Controller Selection =========================
@@ -3788,7 +3788,7 @@
 // Support for Adafruit NeoPixel LED driver
 #define NEOPIXEL_LED
 #if ENABLED(NEOPIXEL_LED)
-  // SKC6812RGBW-NW uses 800 kHz signaling with GRBW byte order.
+  // SKC6812RGBW-NW uses 800 kHz signaling; verify channel order against the strip.
   #define NEOPIXEL_TYPE          NEO_GRBW // NEO_GRBW, NEO_RGBW, NEO_GRB, NEO_RBG, etc.
                                           // See https://github.com/adafruit/Adafruit_NeoPixel/blob/master/Adafruit_NeoPixel.h
   //#define NEOPIXEL_PIN                4 // LED driving pin
@@ -3797,14 +3797,14 @@
   #define NEOPIXEL_PIXELS              8 // Number of LEDs in the first strip.
   #define NEOPIXEL_IS_SEQUENTIAL          // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
   #define NEOPIXEL_BRIGHTNESS         255 // Initial brightness (0-255)
-  #define NEOPIXEL_STARTUP_TEST         // Cycle through colors at startup
+  //#define NEOPIXEL_STARTUP_TEST        // Cycle through colors at startup
 
   // Support for second Adafruit NeoPixel LED driver controlled with M150 S1 ...
   #define NEOPIXEL2_SEPARATE
   #if ENABLED(NEOPIXEL2_SEPARATE)
     #define NEOPIXEL2_PIXELS           8 // Number of LEDs in the second strip
     #define NEOPIXEL2_BRIGHTNESS      255 // Initial brightness (0-255)
-    #define NEOPIXEL2_STARTUP_TEST        // Cycle through colors at startup
+    //#define NEOPIXEL2_STARTUP_TEST       // Cycle through colors at startup
     #define NEOPIXEL_M150_DEFAULT      -1 // Default strip for M150 without 'S'. Use -1 to set all by default.
   #else
     //#define NEOPIXEL2_INSERIES          // Default behavior is NeoPixel 2 in parallel
