@@ -3797,14 +3797,14 @@
   #define NEOPIXEL_PIXELS              8 // Number of LEDs in the first strip.
   #define NEOPIXEL_IS_SEQUENTIAL          // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
   #define NEOPIXEL_BRIGHTNESS         255 // Initial brightness (0-255)
-  //#define NEOPIXEL_STARTUP_TEST        // Cycle through colors at startup
+  #define NEOPIXEL_STARTUP_TEST          // Test strip 0 colors at startup
 
   // Support for second Adafruit NeoPixel LED driver controlled with M150 S1 ...
   #define NEOPIXEL2_SEPARATE
   #if ENABLED(NEOPIXEL2_SEPARATE)
     #define NEOPIXEL2_PIXELS           8 // Number of LEDs in the second strip
     #define NEOPIXEL2_BRIGHTNESS      255 // Initial brightness (0-255)
-    //#define NEOPIXEL2_STARTUP_TEST       // Cycle through colors at startup
+    #define NEOPIXEL2_STARTUP_TEST       // Test strip 1 colors at startup
     #define NEOPIXEL_M150_DEFAULT      -1 // Default strip for M150 without 'S'. Use -1 to set all by default.
   #else
     //#define NEOPIXEL2_INSERIES          // Default behavior is NeoPixel 2 in parallel
