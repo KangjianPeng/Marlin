@@ -1708,8 +1708,8 @@
 #define INVERT_X_DIR true
 #define INVERT_Y_DIR false
 #define INVERT_Z_DIR false
-#define INVERT_I_DIR true
-#define INVERT_J_DIR true
+#define INVERT_I_DIR false
+#define INVERT_J_DIR false
 #define INVERT_K_DIR false
 //#define INVERT_U_DIR false
 //#define INVERT_V_DIR false
