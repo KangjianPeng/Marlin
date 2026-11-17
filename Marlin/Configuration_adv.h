@@ -2847,7 +2847,7 @@
   #define INTERPOLATE      true
 
   #if AXIS_IS_TMC_CONFIG(X)
-    #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       1000       // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  1000  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS     64        // 0..256
     #define X_RSENSE          0.11     // Multiplied x1000 for TMC26X
@@ -2887,7 +2887,7 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(Z)
-    #define Z_CURRENT       800
+    #define Z_CURRENT       1000
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS      8
     #define Z_RSENSE          0.11
@@ -2927,7 +2927,7 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(I)
-    #define I_CURRENT      200
+    #define I_CURRENT      1000
     #define I_CURRENT_HOME I_CURRENT
     #define I_MICROSTEPS     8
     #define I_RSENSE         0.11
@@ -2937,7 +2937,7 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(J)
-    #define J_CURRENT      200
+    #define J_CURRENT      1000
     #define J_CURRENT_HOME J_CURRENT
     #define J_MICROSTEPS     8
     #define J_RSENSE         0.11
@@ -3852,7 +3852,7 @@
  *
  * Execute certain G-code commands immediately after power-on.
  */
-#define STARTUP_COMMANDS "M300 S523 P150\nM300 S659 P150\nM300 S784 P300"
+//#define STARTUP_COMMANDS "M300 S523 P150\nM300 S659 P150\nM300 S784 P300"
 /**
  * G-code Macros
  *

@@ -22,7 +22,8 @@
 ### `Marlin/Configuration_adv.h`
 
 - 启用控制板风扇，使用 `PE2`，电机停止后的保持时间设为 120 秒。
-- 保留 `SPEAKER`，供上位机发送 `M300`；当前 `STARTUP_COMMANDS` 已启用三音开机旋律（523/659/784 Hz）。
+- 保留 `SPEAKER`，供上位机发送 `M300`；已关闭 `STARTUP_COMMANDS`，开机不再播放提示音。
+- 六路 TMC2209 驱动运行电流统一设为 1000 mA；保持电流按 `HOLD_MULTIPLIER 0.5` 自动降为 500 mA。
 
 ### 固件构建与发布
 
